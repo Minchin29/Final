@@ -37,46 +37,44 @@ router.get('/login', async function(req, res, next) {
     res.render('login', { title: 'Login' });
 });
  
-router.post('/login', async function(req, res, next){
-    const { email, password } = req.body;
-    try {
-        const user = await prisma.user.findUnique({
-          where: { email: email }
-        });
 
-        const passwordMatch = await bcrypt.compare(password, user.password); // Compare the inputted password with the stored hashed password
+router.post('/login', async function (req, res, next) {
+  const { email, password } = req.body;
+  try {
+    const user = await prisma.user.findUnique({
+      where: { email: email },
+    });
 
-    
+    if (!user) {
+      // User with the provided email not found
+      return res.render('login', { errorMessage: 'Invalid username or password' });
+    }
+
+    if (user.password) {
+      const passwordMatch = await bcrypt.compare(password, user.password);
+
       if (passwordMatch) {
-        
-      // Save user data in session
-      req.session.user = user;
-      
+        // Save user data in session
+        req.session.user = user;
+
         switch (user.usertype) {
-            case "admin":
-              res.redirect("/admin");
-              break;  
-            case "manager":
-              res.redirect("/manager");
-              break; 
-              case "user":
-                res.redirect("/users");
-                break; 
-            default:
-                res.status(400).send("Invalid userType");
-          }
-        } else {
-            res.render('login', { errorMessage: 'Invalid username or password' });
+          case 'admin':
+            return res.redirect('/admin');
+          case 'manager':
+            return res.redirect('/manager');
+          case 'user':
+            return res.redirect('/users');
+          default:
+            return res.status(400).send('Invalid userType');
         }
-      
-
-
-    } catch (error) {
-        console.error(error);
-        res.status(500).send("Something went wrong");
       }
+    }
 
-
+    return res.render('login', { errorMessage: 'Invalid username or password' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send('Something went wrong');
+  }
 });
 
 /* GET logout page. */
