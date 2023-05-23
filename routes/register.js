@@ -6,10 +6,9 @@ const Joi = require('joi');
 const bcrypt = require('bcrypt');
 
 /* GET register page. */
-router.get('/register', async function(req, res, next) {
-    var students = await prisma.User.findMany();
+router.get('/register', async function(req, res, next) { 
   
-    res.render('register', { title: 'Express', students: students });
+    res.render('register', { title: 'Express' });
 });
 
 /* POST register page. */

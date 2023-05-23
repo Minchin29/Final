@@ -40,7 +40,7 @@ router.get('/login', async function(req, res, next) {
 router.post('/login', async function(req, res, next){
     const { email, password } = req.body;
     try {
-        const user = await prisma.User.findUnique({
+        const user = await prisma.user.findUnique({
           where: { email: email }
         });
 
