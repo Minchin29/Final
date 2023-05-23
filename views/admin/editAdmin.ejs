@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Add Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    /* Add custom background CSS */
+    body {
+      background-color: darkgray;
+      padding-right: 30px;
+    }
+
+    .my-form {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f7f7f7;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-top: 30vh;
+
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      
+    }
+
+    .label {
+      font-weight: bold;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .btn-primary {
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-secondary {
+      transition: background-color 0.3s ease;
+    }
+
+    .btn {
+      border-radius: 5px;
+    }
+
+    .btn:hover {
+      opacity: 0.8;
+    }
+
+    .form-control {
+      border-radius: 5px;
+    }
+
+    select.form-control {
+      appearance: none;
+      background-repeat: no-repeat;
+      background-size: 8px 5px;
+      padding-right: 30px;
+    }
+    
+  </style>
+  </center>
+</head>
+<body>
+  <div class="container">
+    <form action="/admin/editconfirm" method="post" class="my-form">
+      <input type="hidden" name="userId" value="<%= user.id %>">
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" class="form-control" id="email" name="email" value="<%= user.email %>" required>
+      </div>
+      <div class="form-group">
+        <label for="usertype">User Type:</label>
+        <select class="form-control" id="usertype" name="usertype" required> 
+          <option value="admin" <%= user.usertype === 'admin' ? 'selected' : '' %>>Admin</option>
+          <option value="manager" <%= user.usertype === 'manager' ? 'selected' : '' %>>Manager</option>
+          <option value="user" <%= user.usertype === 'user' ? 'selected' : '' %>>User</option>
+        </select>
+      </div>
+      <div class="button-group">
+        <button type="submit" class="btn btn-primary">Update Data</button>
+        <a href="/admin" class="btn btn-secondary">Cancel</a>
+      </div>
+    </form>
+  </div>
+</center>
+  <!-- Add Bootstrap JS (optional, if required for other functionality) -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
